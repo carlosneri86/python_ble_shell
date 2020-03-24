@@ -113,7 +113,7 @@ BLEShell>help char_write_req
         char_write_req 00000000-0000-0000-0000-000000000000 12DEA5345F
 ```
 
-## Whislist
+## Wishlist
 - Use of pairing and bonding
 - Use of privacy
 - Automatic recognition and parsing of Bluetooth SIG UUIDs
