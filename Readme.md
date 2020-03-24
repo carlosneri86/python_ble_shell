@@ -112,7 +112,60 @@ BLEShell>help char_write_req
         
         char_write_req 00000000-0000-0000-0000-000000000000 12DEA5345F
 ```
+Following example shows interaction with a sample device that simulates a Heart Rate Sensor. First a **scan** is used to look for the device. Once found, execute **connect** with the devices address. Now that the device is connected, use **get_char** to list the characteristics. It is known that UUID 0x2A37 is the [heart rate measurement](https://www.bluetooth.com/specifications/gatt/characteristics/) and uses notifications to report measurements. With **notifications** enabled, the device starts sending data. Now turn off notifications and **disconnect** the device:
+```console
+Starting BLE shell
+BLEShell>scan
+Scanning for 10.0 seconds
 
+Found 1 devices
+Found device NXP_HRS with BDADDR 00:60:37:38:81:47
+
+BLEShell>connect 00:60:37:38:81:47
+Trying to connect to 00:60:37:38:81:47
+Device Connected
+BLEShell>get_char
+Found 16 characteristics
+Characteristic UUID: 00002a05-0000-1000-8000-00805f9b34fb with handle 0x3
+Characteristic UUID: 00002a00-0000-1000-8000-00805f9b34fb with handle 0x8
+Characteristic UUID: 00002a01-0000-1000-8000-00805f9b34fb with handle 0xa
+Characteristic UUID: 00002a04-0000-1000-8000-00805f9b34fb with handle 0xc
+Characteristic UUID: 00002a37-0000-1000-8000-00805f9b34fb with handle 0x10
+Characteristic UUID: 00002a38-0000-1000-8000-00805f9b34fb with handle 0x13
+Characteristic UUID: 00002a39-0000-1000-8000-00805f9b34fb with handle 0x15
+Characteristic UUID: 00002a19-0000-1000-8000-00805f9b34fb with handle 0x19
+Characteristic UUID: 00002a29-0000-1000-8000-00805f9b34fb with handle 0x1f
+Characteristic UUID: 00002a24-0000-1000-8000-00805f9b34fb with handle 0x21
+Characteristic UUID: 00002a25-0000-1000-8000-00805f9b34fb with handle 0x23
+Characteristic UUID: 00002a27-0000-1000-8000-00805f9b34fb with handle 0x25
+Characteristic UUID: 00002a26-0000-1000-8000-00805f9b34fb with handle 0x27
+Characteristic UUID: 00002a28-0000-1000-8000-00805f9b34fb with handle 0x29
+Characteristic UUID: 00002a23-0000-1000-8000-00805f9b34fb with handle 0x2b
+Characteristic UUID: 00002a2a-0000-1000-8000-00805f9b34fb with handle 0x2d
+BLEShell>notification 00002a37-0000-1000-8000-00805f9b34fb on
+Notification enabled
+BLEShell>
+Notification received from handle 0x10
+Data: 0x1eae540b06008000
+Notification received from handle 0x10
+Data: 0x1e83b80b0b005000
+Notification received from handle 0x10
+Data: 0x1e991c0c01007000
+Notification received from handle 0x10
+Data: 0x1ebe800c06009000
+Notification received from handle 0x10
+Data: 0x1e96e40c0e006000
+Notification received from handle 0x10
+Data: 0x1e7f480d07005000
+Notification received from handle 0x10
+Data: 0x1eb8ac0d00009000
+Notification received from handle 0x10
+Data: 0x1e83100e0b005000
+BLEShell>notification 00002a37-0000-1000-8000-00805f9b34fb off
+Notification disabled
+BLEShell>disconnect
+Disconnecting from device
+```
 ## Wishlist
 - Use of pairing and bonding
 - Use of privacy
